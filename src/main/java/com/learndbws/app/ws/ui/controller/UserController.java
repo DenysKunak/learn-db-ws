@@ -2,14 +2,7 @@ package com.learndbws.app.ws.ui.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.learndbws.app.ws.service.UserService;
 import com.learndbws.app.ws.shared.dto.UserDto;
@@ -22,9 +15,12 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping
-	public String getUser() {
-		return "get user was called";
+	@GetMapping(path="/{id}")
+	public UserRest getUser(@PathVariable String id) {
+		UserRest returnValue = new UserRest();
+		UserDto userDto = userService.getUserByUserId(id);
+		BeanUtils.copyProperties(userDto, returnValue);
+		return returnValue;
 	}
 
 	@PostMapping
