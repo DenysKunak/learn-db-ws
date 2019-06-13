@@ -10,11 +10,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.learndbws.app.ws.exceptions.UserServiceException;
 import com.learndbws.app.ws.io.entity.UserEntity;
 import com.learndbws.app.ws.io.repositories.UserRepository;
 import com.learndbws.app.ws.service.UserService;
 import com.learndbws.app.ws.shared.Utils;
 import com.learndbws.app.ws.shared.dto.UserDto;
+import com.learndbws.app.ws.ui.model.response.ErrorMessages;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
@@ -70,6 +72,22 @@ public class UserServiceImpl implements UserService {
 		
 		if(userEntity == null) throw new UsernameNotFoundException(userId);
 		BeanUtils.copyProperties(userEntity, returnValue);
+		
+		return returnValue;
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto user) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+		
+		if(userEntity == null) throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+		
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
 		
 		return returnValue;
 	}
