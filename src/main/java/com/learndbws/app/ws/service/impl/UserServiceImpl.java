@@ -19,6 +19,7 @@ import com.learndbws.app.ws.shared.dto.UserDto;
 import com.learndbws.app.ws.ui.model.response.ErrorMessages;
 @Service
 public class UserServiceImpl implements UserService {
+
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
