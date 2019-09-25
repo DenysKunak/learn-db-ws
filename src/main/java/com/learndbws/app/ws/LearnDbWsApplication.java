@@ -13,10 +13,10 @@ import com.learndbws.app.ws.security.AppProperties;
 public class LearnDbWsApplication extends SpringBootServletInitializer {
 
 	//for WAR files
-	@Override
+	/*@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
 		return application.sources(LearnDbWsApplication.class);
-	}
+	}*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(LearnDbWsApplication.class, args);
