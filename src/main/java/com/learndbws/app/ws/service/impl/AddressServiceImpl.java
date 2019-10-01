@@ -2,15 +2,18 @@ package com.learndbws.app.ws.service.impl;
 
 import com.learndbws.app.ws.io.entity.AddressEntity;
 import com.learndbws.app.ws.io.entity.UserEntity;
+import com.learndbws.app.ws.io.repositories.AddressRepository;
 import com.learndbws.app.ws.io.repositories.UserRepository;
 import com.learndbws.app.ws.service.AddressService;
 import com.learndbws.app.ws.shared.dto.AddressDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class AddressServiceImpl implements AddressService {
 
     @Autowired
