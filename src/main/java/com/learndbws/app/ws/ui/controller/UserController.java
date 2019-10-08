@@ -101,8 +101,13 @@ public class UserController {
 		List<UserDto> users = userService.getUsers(page,limit);
 
 		for (UserDto userDto : users){
-			UserRest userModel = new UserRest();
+			/*UserRest userModel = new UserRest();
 			BeanUtils.copyProperties(userDto,userModel);
+			returnValue.add(userModel);*/
+
+			UserRest userModel = new UserRest();
+			ModelMapper modelMapper = new ModelMapper();
+			modelMapper.map(userDto,userModel);
 			returnValue.add(userModel);
 		}
 
