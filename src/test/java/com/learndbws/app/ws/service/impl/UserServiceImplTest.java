@@ -2,11 +2,13 @@ package com.learndbws.app.ws.service.impl;
 
 import com.learndbws.app.ws.io.entity.UserEntity;
 import com.learndbws.app.ws.io.repositories.UserRepository;
+import com.learndbws.app.ws.shared.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -37,5 +39,24 @@ class UserServiceImplTest extends Object {
         userEntity.setEncryptedPassword("qwerty1234");
 
         when(userRepository.findByEmail(anyString())).thenReturn(userEntity);
+
+        UserDto userDto = userService.getUser("example@crap.com");
+
+        assertNotNull(userDto);
+        assertEquals("Denys",userDto.getFirstName());
+    }
+
+    @Test
+    void userNotFoundException_GetUser(){
+
+        when(userRepository.findByEmail(anyString())).thenReturn(null);
+
+        assertThrows(UsernameNotFoundException.class,
+
+                ()->{
+            userService.getUser("example@crap.com");
+        }
+                );
+
     }
 }
